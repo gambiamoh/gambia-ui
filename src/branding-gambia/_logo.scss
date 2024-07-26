@@ -1,0 +1,15 @@
+.header > .openlmis-header > .title,
+.header > .openlmis-header.is-offline > .title {
+  background-image: url('../assets/branding-gambia/logo-header.png');
+}
+
+.header > .openlmis-header.is-offline > .title {
+  color: $white;
+}
+
+.auth-modal .modal-body {
+  background-image: url('../assets/branding-gambia/logo.png') !important;
+  background-size: auto !important;
+  background-position: $space-size*2 $space-size !important;
+  min-height: 258px + $space-size !important;
+}

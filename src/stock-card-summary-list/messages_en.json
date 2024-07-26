@@ -1,0 +1,21 @@
+{
+  "stockCardSummaryList.stockOnHand": "Stock on Hand",
+  "stockCardSummaryList.title": "Stock on Hand - ${facility} - ${program}",
+  "stockCardSummaryList.search": "Search",
+  "stockCardSummaryList.print": "Print",
+  "stockCardSummaryList.noProducts": "No products found.",
+  "stockCardSummaryList.product": "Product",
+  "stockCardSummaryList.productCode": "Product Code",
+  "stockCardSummaryList.productName": "Product Name",
+  "stockCardSummaryList.lotCode": "Batch Code",
+  "stockCardSummaryList.expiryDate": "Expiry Date",
+  "stockCardSummaryList.noLotDefined": "No batch defined",
+  "stockCardSummaryList.actions": "Actions",
+  "stockCardSummaryList.lastUpdate": "Last Update",
+  "stockCardSummaryList.view": "View",
+  "stockCardSummaryList.offline1": "You are offline. Information on this page",
+  "stockCardSummaryList.offline2": " may not be accurate",
+  "stockCardSummaryList.offline3": " at this moment.",
+  "stockCardSummaryList.pendingOfflineEvents": "Pending offline events",
+  "stockCardSummaryList.offline4": " will be synchronized when the internet connection returns."
+}
