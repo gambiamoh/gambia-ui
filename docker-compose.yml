@@ -1,7 +1,7 @@
 version: "2"
 services:
   gambia-ui:
-    image: openlmis/dev-ui:9.0.4-SNAPSHOT
+    image: openlmis/dev-ui:9.0.4
     working_dir: /app
     volumes:
       - '.:/app'
@@ -79,4 +79,4 @@ services:
       - '/one-network-integration-ui'
   image:
     build: .
-    image: openlmisgm/gambia-ui:latest
+    image: openlmisgambia/ui:latest
