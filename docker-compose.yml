@@ -79,4 +79,4 @@ services:
       - '/one-network-integration-ui'
   image:
     build: .
-    image: openlmisgambia/ui:1.0.0-SNAPSHOT
+    image: openlmisgambia/ui:latest
