@@ -14,11 +14,11 @@ else
   cp ./deployment-config/dev_env/settings.env .env
 fi
 
-/usr/local/bin/docker-compose pull
-/usr/local/bin/docker-compose down --volumes
-/usr/local/bin/docker-compose run --entrypoint ./build.sh gambia-ui
-/usr/local/bin/docker-compose build image
-/usr/local/bin/docker-compose down --volumes
+/usr/bin/docker-compose pull
+/usr/bin/docker-compose down --volumes
+/usr/bin/docker-compose run --entrypoint ./build.sh gambia-ui
+/usr/bin/docker-compose build image
+/usr/bin/docker-compose down --volumes
 
 if [ $PRODUCTION == true ]; then
   echo "pushing image for production instance"
