@@ -1,7 +1,8 @@
 version: "2"
 services:
+
   gambia-ui:
-    image: openlmis/dev-ui:9.0.4-SNAPSHOT
+    image: openlmis/dev-ui:9.0.6
     working_dir: /app
     volumes:
       - '.:/app'
@@ -33,50 +34,62 @@ services:
       - ui-layout
       - offline-ui
       - one-network-integration-ui
+
   auth-ui:
-    image: openlmis/auth-ui:6.2.9-SNAPSHOT
+    image: openlmis/auth-ui:6.2.12
     volumes:
       - '/openlmis-auth-ui'
+
   fulfillment-ui:
-    image: openlmis/fulfillment-ui:6.1.2-SNAPSHOT
+    image: openlmis/fulfillment-ui:6.1.4
     volumes:
       - '/openlmis-fulfillment-ui'
+
   referencedata-ui:
-    image: openlmis/referencedata-ui:5.6.8-SNAPSHOT
+    image: openlmis/referencedata-ui:5.6.12
     volumes:
       - '/openlmis-referencedata-ui'
+
   report-ui:
-    image: openlmis/report-ui:5.2.9-SNAPSHOT
+    image: openlmis/report-ui:5.2.11
     volumes:
       - '/openlmis-report-ui'
+
   requisition-ui:
-    image: openlmis/requisition-ui:7.0.8-SNAPSHOT
+    image: openlmis/requisition-ui:7.0.12
     volumes:
       - '/openlmis-requisition-ui'
+
   stockmanagement-ui:
-    image: openlmis/stockmanagement-ui:2.1.3-SNAPSHOT
+    image: openlmis/stockmanagement-ui:2.1.6
     volumes:
       - '/openlmis-stockmanagement-ui'
+
   cce-ui:
-    image: openlmis/cce-ui:1.1.2-SNAPSHOT
+    image: openlmis/cce-ui:1.1.5
     volumes:
       - '/openlmis-cce-ui'
+
   ui-components:
-    image: openlmis/ui-components:7.2.8-SNAPSHOT
+    image: openlmis/ui-components:7.2.11
     volumes:
       - '/openlmis-ui-components'
+
   ui-layout:
-    image: openlmis/ui-layout:5.2.2-SNAPSHOT
+    image: openlmis/ui-layout:5.2.5
     volumes:
       - '/openlmis-ui-layout'
+
   offline-ui:
-    image: openlmis/offline-ui:1.0.3-SNAPSHOT
+    image: openlmis/offline-ui:1.0.5
     volumes:
       - '/openlmis-offline-ui'
+
   one-network-integration-ui:
     image: openlmis/one-network-integration-ui:0.0.2-SNAPSHOT
     volumes:
       - '/one-network-integration-ui'
+
   image:
     build: .
     image: openlmisgambia/ui:latest
