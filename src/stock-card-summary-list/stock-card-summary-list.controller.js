@@ -149,7 +149,6 @@
             stateParams.productCode = vm.productCode;
             stateParams.productName = vm.productName;
             stateParams.lotCode = vm.lotCode;
-            stateParams.size = 100;
 
             $state.go('openlmis.stockmanagement.stockCardSummaries', stateParams, {
                 reload: true
