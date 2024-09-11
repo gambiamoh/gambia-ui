@@ -108,8 +108,7 @@ describe('StockCardSummaryListController', function() {
                 supervised: true,
                 productCode: 'product code',
                 productName: 'product name',
-                lotCode: 'lot code',
-                size: 100
+                lotCode: 'lot code'
             }, {
                 reload: true
             });
