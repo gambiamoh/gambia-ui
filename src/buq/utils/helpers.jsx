@@ -18,11 +18,11 @@ export const findRegion = (geographicZone) => {
     return geographicLevelName === 'RGN' ? geographicZone : findRegion(geographicZone.parent);
 };
 
-// Expected result: "11000 TZS" => "11 000 TZS"
+// Expected result: "11000 $" => "11 000 $"
 export const addThousandsSeparatorsForStrings = (amount) => {
     const parts = amount.split('.');
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-  
+
     return parts.join('.');
 }
 
