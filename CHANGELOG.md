@@ -1,5 +1,7 @@
-Upcoming Version / WIP
+1.1.2-SNAPSHOT / WIP
 =================
+
+* [OPSD-59](https://openlmis.atlassian.net/browse/OPSD-59): Fixed display of non-skipped products after page change
 
 1.1.1 / 2025-05-16
 =================
