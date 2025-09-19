@@ -1,7 +1,8 @@
-1.1.2-SNAPSHOT / WIP
+1.1.2 / 2025-09-19
 =================
 
-* [OPSD-59](https://openlmis.atlassian.net/browse/OPSD-59): Fixed display of non-skipped products after page change
+* [OPSD-62](https://openlmis.atlassian.net/browse/OPSD-62): Requisitionless Orders: Fixed issue preventing users from completing order creation
+* [OPSD-59](https://openlmis.atlassian.net/browse/OPSD-59): Line Item Filters: Fixed issue where the Show Skipped Items filter would reset after a page change
 
 1.1.1 / 2025-05-16
 =================
