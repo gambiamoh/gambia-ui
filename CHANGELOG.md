@@ -1,5 +1,7 @@
-Upcoming Version / WIP
+1.1.3 / 2026-03-25
 =================
+
+* [OPSD-87](https://openlmis.atlassian.net/browse/OPSD-87): Reduced maxUriLength to prevent URL length exceeding 2000 characters
 
 1.1.2 / 2025-09-19
 =================
