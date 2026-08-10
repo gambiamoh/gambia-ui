@@ -1,0 +1,17 @@
+// Supplying-facility stock on hand (approval view).
+// Highlights a line whose approved quantity exceeds the supplying-facility stock on hand.
+
+.supplying-facility-shortfall-row {
+  background: rgba($brand-danger, 0.1);
+}
+
+.supplying-facility-shortfall-value {
+  color: $brand-danger;
+  font-weight: bold;
+}
+
+.supplying-facility-header {
+  display: block;
+  font-weight: bold;
+  margin-bottom: $space-size;
+}

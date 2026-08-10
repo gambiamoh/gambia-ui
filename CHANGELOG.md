@@ -1,6 +1,8 @@
 Upcoming Version / WIP
 =================
 
+* [OPSD-100](https://openlmis.atlassian.net/browse/OPSD-100): Supplying Facility Stock: Show read-only supplying-facility stock on hand in the requisition approval grid, with a facility header, shortfall highlighting, and a no-access notification.
+
 1.1.3 / 2026-03-25
 =================
 
