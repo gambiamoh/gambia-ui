@@ -160,7 +160,9 @@ describe('ViewTabController (supplying-facility stock)', function() {
             expect(vm.supplyingFacilityHeader).toBe('requisitionViewTab.supplyingFacility.name');
             expect(this.messageService.get).toHaveBeenCalledWith(
                 'requisitionViewTab.supplyingFacility.name',
-                { facilities: 'Central Medical Stores, Regional Medical Stores' }
+                {
+                    facilities: 'Central Medical Stores, Regional Medical Stores'
+                }
             );
         });
     });
