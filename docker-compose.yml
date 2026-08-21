@@ -41,7 +41,7 @@ services:
       - '/openlmis-auth-ui'
 
   fulfillment-ui:
-    image: openlmis/fulfillment-ui:6.1.6
+    image: openlmis/fulfillment-ui:6.1.10-SNAPSHOT
     volumes:
       - '/openlmis-fulfillment-ui'
 
