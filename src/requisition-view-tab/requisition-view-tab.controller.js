@@ -32,14 +32,16 @@
         '$filter', 'selectProductsModalService', 'requisitionValidator', 'requisition', 'columns', 'messageService',
         'lineItems', 'alertService', 'canSubmit', 'canAuthorize', 'fullSupply', 'TEMPLATE_COLUMNS', '$q',
         'OpenlmisArrayDecorator', 'canApproveAndReject', 'items', 'paginationService', '$stateParams',
-        'requisitionCacheService', 'canUnskipRequisitionItemWhenApproving', 'program', 'TB_MONTHLY_PROGRAM', '$scope'
+        'requisitionCacheService', 'canUnskipRequisitionItemWhenApproving', 'program', 'TB_MONTHLY_PROGRAM', '$scope',
+        'quantityUnitCalculateService'
     ];
 
     function ViewTabController($filter, selectProductsModalService, requisitionValidator, requisition, columns,
                                messageService, lineItems, alertService, canSubmit, canAuthorize, fullSupply,
                                TEMPLATE_COLUMNS, $q, OpenlmisArrayDecorator, canApproveAndReject, items,
                                paginationService, $stateParams, requisitionCacheService,
-                               canUnskipRequisitionItemWhenApproving, program, TB_MONTHLY_PROGRAM, $scope) {
+                               canUnskipRequisitionItemWhenApproving, program, TB_MONTHLY_PROGRAM, $scope,
+                               quantityUnitCalculateService) {
         var vm = this;
 
         var SUPPLYING_FACILITY_STOCK_ON_HAND = 'supplyingFacilityStockOnHand';
@@ -59,6 +61,9 @@
         vm.isSupplyingFacilityShortfall = isSupplyingFacilityShortfall;
         vm.getSupplyingFacilityStockOnHand = getSupplyingFacilityStockOnHand;
         vm.monthlyTBColumns = TEMPLATE_COLUMNS.getTbMonthlyColumns();
+        vm.getLabelForColumn = getLabelForColumn;
+        vm.isProductNameColumn = isProductNameColumn;
+        vm.isColumnBeforeSupplyingFacility = isColumnBeforeSupplyingFacility;
 
         /**
          * @ngdoc property
@@ -155,9 +160,11 @@
         };
 
         vm.filteredItems = undefined;
+
         // OPSD-59: Fixed display of non-skipped products after page change
         vm.showSkippedLineItems = undefined;
         // OPSD-59: ends here
+
         vm.fullSupply = undefined;
 
         /**
@@ -220,15 +227,31 @@
         vm.showSupplyingFacilityBanner = undefined;
 
         function onInit() {
-            // The supplying-facility stock on hand value is rendered by a dedicated cell, so exclude the
-            // template column from the generic grid (and from the field-value pass, which would otherwise
-            // overwrite the server value).
+            // The supplying-facility stock on hand value is rendered by a dedicated cell, so exclude
+            // the template column from the generic grid (and from the field-value pass, which would
+            // otherwise overwrite the server value).
             var displayedColumns = columns.filter(function(column) {
                 return column.name !== SUPPLYING_FACILITY_STOCK_ON_HAND;
             });
 
             angular.forEach(displayedColumns, function(column) {
+                if (column.isQuantityColumn()) {
+                    column.isQuantity = true;
+                    column.recalculateQuantity = requisition.recalculateQuantity.bind(requisition);
+                }
                 angular.forEach(lineItems, function(lineItem) {
+                    if (column.isQuantityColumn()) {
+                        if (!lineItem.quantities) {
+                            lineItem.quantities = {};
+                        }
+                        lineItem.quantities[column.name] = {};
+                        if (lineItem[column.name] !== null && lineItem[column.name] !== undefined) {
+                            lineItem.quantities[column.name].quantity = lineItem[column.name];
+                            lineItem.quantities[column.name] = quantityUnitCalculateService.
+                                recalculateInputQuantity(lineItem.quantities[column.name],
+                                    lineItem.orderable.netContent, true);
+                        }
+                    }
                     lineItem.updateFieldValue(column, requisition);
                 });
             });
@@ -248,6 +271,7 @@
             vm.noProductsMessage = getNoProductsMessage();
             vm.canApproveAndReject = canApproveAndReject;
             computeSupplyingFacilityStock();
+            computeSupplyingFacilityColumnPosition(vm.columns);
             vm.paginationId = fullSupply ? 'fullSupplyList' : 'nonFullSupplyList';
             vm.fullSupply = fullSupply;
             // OPSD-59: Fixed display of non-skipped products after page change
@@ -327,6 +351,26 @@
             // OPSD-59: ends here
             requisitionCacheService.cacheRequisition(vm.requisition);
             return $q.resolve();
+        }
+
+        /**
+         * @ngdoc method
+         * @methodOf requisition-view-tab.controller:ViewTabController
+         * @name isProductNameColumn
+         *
+         * @description
+         * Checks whether the given column is the product name column, after which the read-only
+         * Pack size column is rendered.
+         *
+         * @param  {RequisitionColumn} column  the column of the requisition template
+         * @return {Boolean}                   true if it is the product name column
+         */
+        function isProductNameColumn(column) {
+            return column.name === TEMPLATE_COLUMNS.PRODUCT_NAME;
+        }
+
+        function getLabelForColumn(column) {
+            return column.label;
         }
 
         /**
@@ -454,6 +498,18 @@
                 };
 
             var lineItems = $filter('filter')(vm.requisition.requisitionLineItems, filterObject);
+            angular.forEach(lineItems, function(lineItem) {
+                angular.forEach(columns, function(column) {
+                    if (column.isQuantityColumn()) {
+                        if (!lineItem.quantities) {
+                            lineItem.quantities = {};
+                        }
+                        if (!lineItem.quantities[column.name]) {
+                            lineItem.quantities[column.name] = {};
+                        }
+                    }
+                });
+            });
 
             paginationService
                 .registerList(
@@ -542,7 +598,8 @@
          * @description
          * Returns true when the approved quantity for the given line item exceeds the stock on hand at
          * the supplying facility. A missing stock on hand is treated as zero for the comparison, and the
-         * check applies only when at least one line item carries a stock on hand value.
+         * check applies only when at least one line item carries a stock on hand value. The comparison
+         * uses the raw stored values, so it stays correct regardless of the Packs/Doses display toggle.
          *
          * @param  {Object}  lineItem the requisition line item to check
          * @return {Boolean}          true when the approved quantity exceeds the supplying-facility stock
@@ -580,22 +637,58 @@
             return !!(column && column.isDisplayed);
         }
 
+        // The supplying-facility stock on hand is rendered by a dedicated cell (not the generic
+        // product-grid-cell), so to honour the template's column order we remember the displayed
+        // column whose displayOrder is the highest one still below the supplying-facility column's
+        // own, and render the dedicated cell right after it. A null value means it comes first.
+        function computeSupplyingFacilityColumnPosition(orderedColumns) {
+            vm.supplyingFacilityAfterColumn = null;
+
+            var supplyingFacilityColumn;
+            columns.forEach(function(column) {
+                if (column.name === SUPPLYING_FACILITY_STOCK_ON_HAND) {
+                    supplyingFacilityColumn = column;
+                }
+            });
+            if (!supplyingFacilityColumn) {
+                return;
+            }
+
+            var precedingColumn;
+            orderedColumns.forEach(function(column) {
+                if (column.displayOrder < supplyingFacilityColumn.displayOrder &&
+                    (!precedingColumn || column.displayOrder > precedingColumn.displayOrder)) {
+                    precedingColumn = column;
+                }
+            });
+            vm.supplyingFacilityAfterColumn = precedingColumn ? precedingColumn.name : null;
+        }
+
+        function isColumnBeforeSupplyingFacility(column) {
+            return vm.supplyingFacilityAfterColumn === column.name;
+        }
+
         /**
          * @ngdoc method
          * @methodOf requisition-view-tab.controller:ViewTabController
          * @name getSupplyingFacilityStockOnHand
          *
          * @description
-         * Returns the supplying-facility stock on hand to display for the given line item: the numeric value
-         * (including zero), or a placeholder when no value is available.
+         * Returns the supplying-facility stock on hand to display for the given line item. The value follows
+         * the Packs/Doses toggle the same way the built-in stock on hand column does, so both cells always
+         * show the same unit. Returns a placeholder when no value is available.
          *
          * @param  {Object} lineItem the requisition line item
-         * @return {*}               the stock on hand value or the placeholder
+         * @return {*}               the stock on hand in the selected quantity unit, or the placeholder
          */
         function getSupplyingFacilityStockOnHand(lineItem) {
-            return isPresent(lineItem.supplyingFacilityStockOnHand) ?
-                lineItem.supplyingFacilityStockOnHand :
-                vm.supplyingFacilityPlaceholder;
+            if (!isPresent(lineItem.supplyingFacilityStockOnHand)) {
+                return vm.supplyingFacilityPlaceholder;
+            }
+            return requisition.recalculateQuantity(
+                lineItem.supplyingFacilityStockOnHand,
+                lineItem.orderable.netContent
+            );
         }
 
         function buildSupplyingFacilityHeader(facilities, hasStock) {

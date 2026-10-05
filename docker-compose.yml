@@ -1,8 +1,7 @@
-version: "2"
 services:
 
   gambia-ui:
-    image: openlmis/dev-ui:9.0.7
+    image: openlmis/dev-ui:9.1.0
     working_dir: /app
     volumes:
       - '.:/app'
@@ -34,62 +33,50 @@ services:
       - ui-layout
       - offline-ui
       - one-network-integration-ui
-
   auth-ui:
-    image: openlmis/auth-ui:6.2.15
+    image: openlmis/auth-ui:6.2.19
     volumes:
       - '/openlmis-auth-ui'
-
   fulfillment-ui:
-    image: openlmis/fulfillment-ui:6.1.10-SNAPSHOT
+    image: openlmis/fulfillment-ui:6.2.0
     volumes:
       - '/openlmis-fulfillment-ui'
-
   referencedata-ui:
-    image: openlmis/referencedata-ui:5.6.16
+    image: openlmis/referencedata-ui:5.7.0
     volumes:
       - '/openlmis-referencedata-ui'
-
   report-ui:
-    image: openlmis/report-ui:5.2.14
+    image: openlmis/report-ui:5.3.0
     volumes:
       - '/openlmis-report-ui'
-
   requisition-ui:
-    image: openlmis/requisition-ui:7.0.14
+    image: openlmis/requisition-ui:7.1.0
     volumes:
       - '/openlmis-requisition-ui'
-
   stockmanagement-ui:
-    image: openlmis/stockmanagement-ui:2.1.8
+    image: openlmis/stockmanagement-ui:2.2.0
     volumes:
       - '/openlmis-stockmanagement-ui'
-
   cce-ui:
-    image: openlmis/cce-ui:1.1.7
+    image: openlmis/cce-ui:1.1.12
     volumes:
       - '/openlmis-cce-ui'
-
   ui-components:
-    image: openlmis/ui-components:7.2.16
+    image: openlmis/ui-components:7.3.0
     volumes:
       - '/openlmis-ui-components'
-
   ui-layout:
-    image: openlmis/ui-layout:5.2.8
+    image: openlmis/ui-layout:5.2.11
     volumes:
       - '/openlmis-ui-layout'
-
   offline-ui:
-    image: openlmis/offline-ui:1.0.7
+    image: openlmis/offline-ui:1.0.9
     volumes:
       - '/openlmis-offline-ui'
-
   one-network-integration-ui:
-    image: openlmis/one-network-integration-ui:0.0.6
+    image: openlmis/one-network-integration-ui:0.0.7
     volumes:
       - '/one-network-integration-ui'
-
   image:
     build: .
     image: openlmisgambia/ui:latest
