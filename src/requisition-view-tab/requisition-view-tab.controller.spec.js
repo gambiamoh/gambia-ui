@@ -1204,6 +1204,19 @@ describe('ViewTabController (supplying-facility stock)', function() {
             };
         };
 
+        beforeEach(function() {
+            var spec = this;
+            this.requisitionWithColumnAt = function(displayOrder, overrides) {
+                var requisition = spec.requisition(angular.extend({
+                    supplyingFacilities: [{
+                        name: 'Central Medical Stores'
+                    }]
+                }, overrides));
+                requisition.template.columnsMap.supplyingFacilityStockOnHand.displayOrder = displayOrder;
+                return requisition;
+            };
+        });
+
         it('places the supplying-facility cell after the last column below its displayOrder', function() {
             var precedingColumn = {
                 name: 'b'
@@ -1212,11 +1225,7 @@ describe('ViewTabController (supplying-facility stock)', function() {
                 name: 'a'
             };
             var vm = this.initController(
-                this.requisition({
-                    supplyingFacilities: [{
-                        name: 'Central Medical Stores'
-                    }]
-                }),
+                this.requisitionWithColumnAt(4),
                 [{
                     supplyingFacilityStockOnHand: 10,
                     updateFieldValue: function() {}
@@ -1236,11 +1245,7 @@ describe('ViewTabController (supplying-facility stock)', function() {
 
         it('renders the supplying-facility cell first when its displayOrder precedes all others', function() {
             var vm = this.initController(
-                this.requisition({
-                    supplyingFacilities: [{
-                        name: 'Central Medical Stores'
-                    }]
-                }),
+                this.requisitionWithColumnAt(1),
                 [{
                     supplyingFacilityStockOnHand: 10,
                     updateFieldValue: function() {}
@@ -1253,6 +1258,25 @@ describe('ViewTabController (supplying-facility stock)', function() {
             );
 
             expect(vm.supplyingFacilityAfterColumn).toBe(null);
+        });
+
+        it('follows the template order when the tab columns omit the supplying-facility column', function() {
+            var vm = this.initController(
+                this.requisitionWithColumnAt(16, {
+                    emergency: true
+                }),
+                [{
+                    supplyingFacilityStockOnHand: 10,
+                    updateFieldValue: function() {}
+                }],
+                [
+                    makeColumn('orderable.productCode', 1),
+                    makeColumn('approvedQuantity', 15),
+                    makeColumn('remarks', 17)
+                ]
+            );
+
+            expect(vm.supplyingFacilityAfterColumn).toBe('approvedQuantity');
         });
     });
 

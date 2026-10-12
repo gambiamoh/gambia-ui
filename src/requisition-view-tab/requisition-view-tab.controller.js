@@ -644,12 +644,12 @@
         function computeSupplyingFacilityColumnPosition(orderedColumns) {
             vm.supplyingFacilityAfterColumn = null;
 
-            var supplyingFacilityColumn;
-            columns.forEach(function(column) {
-                if (column.name === SUPPLYING_FACILITY_STOCK_ON_HAND) {
-                    supplyingFacilityColumn = column;
-                }
-            });
+            // OPSD-124: Backport of the core fix OLMIS-8403; drop this marker when the override is re-seeded from
+            // a requisition-ui release that includes it.
+            // Read the column from the template: getColumns drops columns flagged $fullSupplyOnly, so the
+            // tab's columns omit it for emergency requisitions and on the non-full supply tab.
+            var supplyingFacilityColumn = requisition.template.getColumn(SUPPLYING_FACILITY_STOCK_ON_HAND);
+            // OPSD-124: ends here
             if (!supplyingFacilityColumn) {
                 return;
             }
