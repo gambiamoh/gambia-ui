@@ -1,9 +1,6 @@
-
-
 {
   "adminLotEdit.lotCode": "Batch Number",
-  "adminLotEdit.lotManufactureDate": "Manufacture Date",
-  "adminLotEdit.editLot.title": "Edit Batch number: \"${lot}\"",
+  "adminLotEdit.editLot.title": "Edit Batch Number: \"${lot}\"",
   "adminLotEdit.editLot": "Edit Batch Number",
   "adminLotEdit.save.confirmationQuestion": "Do you want to edit this batch number?",
   "adminLotsEdit.lotNotFound": "Batch number not found",

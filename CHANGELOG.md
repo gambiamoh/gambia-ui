@@ -1,7 +1,8 @@
 Upcoming Version / WIP
 =================
 
-* [OPSD-100](https://openlmis.atlassian.net/browse/OPSD-100): Supplying Facility Stock: Show read-only supplying-facility stock on hand in the requisition approval grid, with a facility header, shortfall highlighting, and a no-access notification.
+* [OPSD-123](https://openlmis.atlassian.net/browse/OPSD-123): Upgraded to the OpenLMIS 3.20 UI modules (reference-ui 5.2.15), rebased the remaining overrides on them, removed overrides now covered by core and aligned the consul registration with the reference UI.
+* [OPSD-124](https://openlmis.atlassian.net/browse/OPSD-124): The supplying-facility stock on hand column no longer shows first in emergency requisitions; it follows its template position there too (backport of the core fix OLMIS-8403).
 
 1.1.3 / 2026-03-25
 =================
