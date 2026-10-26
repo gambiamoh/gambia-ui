@@ -20,7 +20,6 @@ services:
       - ui-components
       - ui-layout
       - offline-ui
-      - one-network-integration-ui
     depends_on:
       - auth-ui
       - fulfillment-ui
@@ -32,7 +31,6 @@ services:
       - ui-components
       - ui-layout
       - offline-ui
-      - one-network-integration-ui
   auth-ui:
     image: openlmis/auth-ui:6.2.19
     volumes:
@@ -73,10 +71,6 @@ services:
     image: openlmis/offline-ui:1.0.9
     volumes:
       - '/openlmis-offline-ui'
-  one-network-integration-ui:
-    image: openlmis/one-network-integration-ui:0.0.7
-    volumes:
-      - '/one-network-integration-ui'
   image:
     build: .
     image: openlmisgambia/ui:latest
