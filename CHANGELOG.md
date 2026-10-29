@@ -1,6 +1,7 @@
 Upcoming Version / WIP
 =================
 
+* [OPSD-123](https://openlmis.atlassian.net/browse/OPSD-123): Added a "New UI" button next to the language picker; it opens the new OpenLMIS UI served under the path given by the `NEW_UI_URL` environment variable (for example `/v2/`); the button is hidden where the variable is not set.
 * [OPSD-123](https://openlmis.atlassian.net/browse/OPSD-123): Removed the One Network Integration page from the build; Gambia runs no One Network integration service, so the page could only show an error.
 * [OPSD-123](https://openlmis.atlassian.net/browse/OPSD-123): Upgraded to the OpenLMIS 3.20.2 UI modules (referencedata-ui 5.7.1, requisition-ui 7.1.1); the OPSD-124 backport is now covered by core.
 * [OPSD-123](https://openlmis.atlassian.net/browse/OPSD-123): Upgraded to the OpenLMIS 3.20 UI modules (reference-ui 5.2.15), rebased the remaining overrides on them, removed overrides now covered by core and aligned the consul registration with the reference UI; a failing health check never removes the UI from Consul.
