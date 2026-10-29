@@ -4,7 +4,7 @@
     <div class="navbar-right-group">
         <openlmis-logout class="navbar-right"></openlmis-logout>
         <openlmis-locale class="navbar-right locale-container"></openlmis-locale>
-        <gambia-new-ui-link class="navbar-right"></gambia-new-ui-link>
+        <a class="btn navbar-right" href="${NEW_UI_URL}" ng-if="'${NEW_UI_URL}' && '${NEW_UI_URL}'.charAt(0) !== '$'">{{'openlmisMainState.newUi' | message}}</a>
     </div>
 </div>
 
@@ -15,7 +15,7 @@
                 <span class="fa fa-bars"></span>
             </button>
             <div class="openlmis-button-group">
-                <gambia-new-ui-link class="navbar-nav"></gambia-new-ui-link>
+                <a class="btn navbar-nav" href="${NEW_UI_URL}" ng-if="'${NEW_UI_URL}' && '${NEW_UI_URL}'.charAt(0) !== '$'">{{'openlmisMainState.newUi' | message}}</a>
                 <openlmis-locale class="locale-container"></openlmis-locale>
                 <openlmis-logout class="navbar-nav"></openlmis-logout>
             </div>
