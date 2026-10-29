@@ -1,4 +1,4 @@
-Upcoming Version / WIP
+1.2.0 / 2026-10-29
 =================
 
 * [OPSD-123](https://openlmis.atlassian.net/browse/OPSD-123): Added a "New UI" button next to the language picker; it opens the new OpenLMIS UI served under the path given by the `NEW_UI_URL` environment variable (for example `/v2/`); the button is hidden where the variable is not set.
