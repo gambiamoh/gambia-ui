@@ -1,6 +1,8 @@
 Upcoming Version / WIP
 =================
 
+* [OPSD-134](https://openlmis.atlassian.net/browse/OPSD-134): The product row on the Issue, Receive, Adjustments and Kit Unpack pages no longer hides the Add button and the Packs/Doses switch on narrow screens (tablets, browser zoom): Filter, scan status and Packs/Doses sit on the first line, Product, Lot and Add (labels above the fields) on the next, and the fields wrap further when they do not fit; long product names are shortened with an ellipsis.
+
 1.2.0 / 2026-10-29
 =================
 

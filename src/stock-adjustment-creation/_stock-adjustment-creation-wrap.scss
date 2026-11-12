@@ -1,0 +1,47 @@
+.stock-adjustment-creation .openlmis-table-container .toolbar {
+    flex-wrap: wrap;
+    row-gap: 0.5em;
+
+    > quantity-unit-toggle {
+        order: 2;
+        margin-inline-start: auto;
+    }
+
+    > section.is-primary {
+        order: 3;
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    form[name="productForm"] {
+        flex-wrap: wrap;
+        row-gap: 0.5em;
+
+        > div {
+            display: grid;
+            grid-template-rows: auto auto;
+            grid-auto-flow: column;
+            grid-auto-columns: minmax(0, 1fr);
+            column-gap: 1em;
+            flex: 0 1 auto;
+            min-width: 0;
+
+            &:first-child {
+                max-width: 40em;
+            }
+
+            > label {
+                margin: 0 0 0.25em;
+            }
+
+            > [input-control] {
+                margin: 0;
+
+                > * {
+                    flex: 1 1 auto;
+                    min-width: 0;
+                }
+            }
+        }
+    }
+}
